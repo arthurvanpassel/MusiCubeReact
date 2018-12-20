@@ -55,6 +55,10 @@ constructor() {
     })
   }
 
+  AddToPlaylist = track => {
+    console.log(spotifyWebApi.getUserPlaylists());
+  }
+
   render() {
     return (
       <div className="App">
@@ -71,13 +75,15 @@ constructor() {
             <label>Search song</label>
             <input type='text' placeholder='Name track' onChange={this.onChange}></input>
             <div>
-            
+
               <ul>
               {this.state.tracks.map(track => (
-                <li>{track.name} - {track.artists[0].name}</li>
+                <button onClick={() => this.AddToPlaylist(track)} ><li>{track.name} - {track.artists[0].name}</li></button>
               ))}
               </ul>
-            
+
+              <button onClick={() => this.AddToPlaylist()}>Create playlist</button>
+
             </div>
           </form>
         </div>
