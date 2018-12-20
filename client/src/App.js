@@ -60,7 +60,7 @@ constructor() {
     //console.log(spotifyWebApi.getUserPlaylists());
     const uris = ["spotify:track:6l7PqWKsgm4NLomOE7Veou"];
 
-    spotifyWebApi.addTracksToPlaylist("1132457862","13CsqCUEgPKYRSBWUI8jXw", uris);
+    spotifyWebApi.addTracksToPlaylist("13CsqCUEgPKYRSBWUI8jXw", uris);
   }
 
   CreatePLaylist () {
