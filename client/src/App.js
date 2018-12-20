@@ -59,6 +59,10 @@ constructor() {
     console.log(spotifyWebApi.getUserPlaylists());
   }
 
+  CreatePLaylist () {
+    spotifyWebApi.createPlaylist();
+  }
+
   render() {
     return (
       <div className="App">
@@ -82,7 +86,8 @@ constructor() {
               ))}
               </ul>
 
-              <button onClick={() => this.AddToPlaylist()}>Create playlist</button>
+              <button onClick={() => this.CreatePLaylist()}>Create playlist</button>
+              <input type="text" name="playListName" value="" />
 
             </div>
           </form>
