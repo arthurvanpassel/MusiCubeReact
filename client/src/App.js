@@ -15,7 +15,8 @@ constructor() {
       image: ''
     },
     query: "",
-    tracks: []
+    tracks: [],
+    userId: null
   }
   if (params.access_token) {
     spotifyWebApi.setAccessToken(params.access_token)
@@ -60,7 +61,16 @@ constructor() {
   }
 
   CreatePLaylist () {
-    spotifyWebApi.createPlaylist();
+    console.log(spotifyWebApi.getMe());
+
+    spotifyWebApi.getMe()
+    .then((response) => {
+      this.setState({
+        userId: response.id,
+      })
+    })
+    console.log("1" + this.state.userId);
+    spotifyWebApi.createPlaylist(this.state.userId, 'ReactTesterit');
   }
 
   render() {
