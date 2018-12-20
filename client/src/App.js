@@ -57,10 +57,11 @@ constructor() {
   }
 
   AddToPlaylist = track => {
-    //console.log(spotifyWebApi.getUserPlaylists());
-    const uris = ["spotify:track:6l7PqWKsgm4NLomOE7Veou"];
+    console.log(spotifyWebApi.getUserPlaylists('1132457862'));
 
-    spotifyWebApi.addTracksToPlaylist("13CsqCUEgPKYRSBWUI8jXw", uris);
+    const tracksToAdd = [track='4iV5W9uYEdYUVa79Axb7Rh', track='1301WleyT98MSxVHPZCA6M']
+
+    spotifyWebApi.addTracksToPlaylist('13CsqCUEgPKYRSBWUI8jXw', tracksToAdd)
   }
 
   CreatePLaylist () {
@@ -73,8 +74,7 @@ constructor() {
       })
     })
     console.log(this.state.userId);
-    //spotifyWebApi.createPlaylist(this.state.userId);
-
+    spotifyWebApi.createPlaylist('1132457862');
 
   }
 
@@ -102,6 +102,7 @@ constructor() {
               </ul>
 
               <button onClick={() => this.CreatePLaylist()}>Create playlist</button>
+              <input type="text" name="playListName" value="" />
 
             </div>
           </form>
