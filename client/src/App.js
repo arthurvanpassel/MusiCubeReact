@@ -64,26 +64,30 @@ constructor() {
   }
 
   AddToPlaylist = track => {
+    //console.log(track);
     if (!this.state.playlistId) {
       alert("Maak een afspeellijst aan!")
     }
     else {
-      var uris =  ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh","spotify:track:1301WleyT98MSxVHPZCA6M"]
-      spotifyWebApi.addTracksToPlaylist(this.state.playlistId, uris,
-      {'uris': uris});
-      }
+      var uris =  [track.uri];
+      spotifyWebApi.addTracksToPlaylist(this.state.playlistId, uris, {'uris': uris, 'position': 0});
+      //https://api.spotify.com/v1/playlists/13CsqCUEgPKYRSBWUI8jXw/tracks?uris=spotify%3Atrack%3A4iV5W9uYEdYUVa79Axb7Rh%2Cspotify%3Atrack%3A1301WleyT98MSxVHPZCA6M
     }
+  }
 
   CreatePLaylist() {
-    console.log('createPlaylist');
-    spotifyWebApi.createPlaylist({"name":this.state.playlistName, "public":false, "collaborative":true, "description":null});
-    spotifyWebApi.getUserPlaylists('1132457862')
+    spotifyWebApi.createPlaylist({"name":this.state.playlistName, "public":false, "collaborative":true, "description":null})
     .then((response) => {
       this.setState({
-        playlistId: response.items[0].id
+        playlistId: response.id
       })
-    })
-
+    });
+    spotifyWebApi.getMe()
+    .then((response) => {
+      this.setState({
+        userId: response.id
+      })
+    });
   }
 
   render() {
@@ -110,7 +114,7 @@ constructor() {
 
               <ul>
               {this.state.tracks.map(track => (
-                <button onClick={() => this.AddToPlaylist(track)} ><li>{track.name} - {track.artists[0].name}</li></button>
+                <a id="track" href="#" onClick={() => this.AddToPlaylist(track)}><li>{track.name} - {track.artists[0].name}</li></a>
               ))}
               </ul>
 
