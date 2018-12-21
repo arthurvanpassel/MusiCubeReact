@@ -17,7 +17,8 @@ constructor() {
     query: "",
     tracks: [],
     userId: null,
-    playlistName: ""
+    playlistName: "",
+    playlistId: null
   }
   if (params.access_token) {
     spotifyWebApi.setAccessToken(params.access_token)
@@ -48,7 +49,7 @@ constructor() {
 
   onChange = e => {
     const {value} = e.target;
-    console.log(value)
+    //console.log(value)
     spotifyWebApi.searchTracks(value)
     .then((response) => {
       this.setState({
@@ -63,13 +64,26 @@ constructor() {
   }
 
   AddToPlaylist = track => {
-    console.log(spotifyWebApi.getUserPlaylists('1132457862'));
-  }
+    if (!this.state.playlistId) {
+      alert("Maak een afspeellijst aan!")
+    }
+    else {
+      var uris =  ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh","spotify:track:1301WleyT98MSxVHPZCA6M"]
+      spotifyWebApi.addTracksToPlaylist(this.state.playlistId, uris,
+      {'uris': uris});
+      }
+    }
 
   CreatePLaylist() {
     console.log('createPlaylist');
     spotifyWebApi.createPlaylist({"name":this.state.playlistName, "public":false, "collaborative":true, "description":null});
-    //spotifyWebApi.addTracksToPlaylist('13CsqCUEgPKYRSBWUI8jXw', {"uris": ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh","spotify:track:1301WleyT98MSxVHPZCA6M"], "position": 3});
+    spotifyWebApi.getUserPlaylists('1132457862')
+    .then((response) => {
+      this.setState({
+        playlistId: response.items[0].id
+      })
+    })
+
   }
 
   render() {
