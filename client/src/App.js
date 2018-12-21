@@ -62,19 +62,19 @@ constructor() {
 
   CreatePLaylist () {
     //console.log(spotifyWebApi.getMe());
-    /*
-    spotifyWebApi.getMe()
-    .then((response) => {
-      this.setState({
-        userId: response.id,
-      })
-    })
-    console.log(this.state.userId);
-    */
+
+    // spotifyWebApi.getMe()
+    // .then((response) => {
+    //   this.setState({
+    //     userId: response.id,
+    //   })
+    // })
+    // console.log(this.state.userId);
+
     //console.log(spotifyWebApi.getPlaylist('13CsqCUEgPKYRSBWUI8jXw'));
 
 
-    spotifyWebApi.createPlaylist('1132457862', JSON.stringify({"name":'A new playlist created with react', "public":false, "collaborative":true, "description":null}));
+    spotifyWebApi.createPlaylist({"name":'A new playlist created with react', "public":false, "collaborative":true, "description":null});
 
     //spotifyWebApi.addTracksToPlaylist('13CsqCUEgPKYRSBWUI8jXw', JSON.stringify({"uris": ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh","spotify:track:1301WleyT98MSxVHPZCA6M"], "position": 3}) );
   }

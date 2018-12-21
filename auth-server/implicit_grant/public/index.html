@@ -115,7 +115,8 @@
             $.ajax({
                 url: 'https://api.spotify.com/v1/me',
                 headers: {
-                  'Authorization': 'Bearer ' + access_token
+                  'Authorization': 'Bearer ' + access_token,
+                  'Content-Type': 'application/json'
                 },
                 success: function(response) {
                   userProfilePlaceholder.innerHTML = userProfileTemplate(response);
@@ -131,13 +132,13 @@
 
           document.getElementById('login-button').addEventListener('click', function() {
 
-            var client_id = 'CLIENT_ID'; // Your client id
-            var redirect_uri = 'REDIRECT_URI'; // Your redirect uri
+            var client_id = '75016bc3448b4029a0f87960379bb092'; // Your client id
+            var client_secret = '22f3e978a33e47c8993682e5163b15d9'; // Your secret
 
             var state = generateRandomString(16);
 
             localStorage.setItem(stateKey, state);
-            var scope = 'user-read-private user-read-email';
+            var scope = 'user-read-private user-read-email user-read-playback-state playlist-modify-private playlist-modify-public';
 
             var url = 'https://accounts.spotify.com/authorize';
             url += '?response_type=token';

@@ -105,7 +105,8 @@
             $.ajax({
                 url: 'https://api.spotify.com/v1/me',
                 headers: {
-                  'Authorization': 'Bearer ' + access_token
+                  'Authorization': 'Bearer ' + access_token,
+                  'Content-Type': 'application/json'
                 },
                 success: function(response) {
                   userProfilePlaceholder.innerHTML = userProfileTemplate(response);
@@ -139,4 +140,3 @@
     </script>
   </body>
 </html>
-

@@ -81,7 +81,8 @@ app.get('/callback', function(req, res) {
         grant_type: 'authorization_code'
       },
       headers: {
-        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')),
+        'Content-Type': 'application/json'
       },
       json: true
     };
@@ -94,7 +95,9 @@ app.get('/callback', function(req, res) {
 
         var options = {
           url: 'https://api.spotify.com/v1/me',
-          headers: { 'Authorization': 'Bearer ' + access_token },
+          headers: {
+            'Authorization': 'Bearer ' + access_token,
+            'Content-Type': 'application/json' },
           json: true
         };
 

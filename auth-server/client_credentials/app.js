@@ -9,14 +9,15 @@
 
 var request = require('request'); // "Request" library
 
-var client_id = 'CLIENT_ID'; // Your client id
-var client_secret = 'CLIENT_SECRET'; // Your secret
+var client_id = '75016bc3448b4029a0f87960379bb092'; // Your client id
+var client_secret = '22f3e978a33e47c8993682e5163b15d9'; // Your secret
 
 // your application requests authorization
 var authOptions = {
   url: 'https://accounts.spotify.com/api/token',
   headers: {
-    'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+    'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')),
+     'Content-Type': 'application/json'
   },
   form: {
     grant_type: 'client_credentials'
@@ -30,9 +31,10 @@ request.post(authOptions, function(error, response, body) {
     // use the access token to access the Spotify Web API
     var token = body.access_token;
     var options = {
-      url: 'https://api.spotify.com/v1/users/jmperezperez',
+      url: 'https://api.spotify.com/v1/users/1119737788',
       headers: {
-        'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
       },
       json: true
     };
