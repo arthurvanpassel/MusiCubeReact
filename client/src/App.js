@@ -16,7 +16,8 @@ constructor() {
     },
     query: "",
     tracks: [],
-    userId: null
+    userId: null,
+    playlistName: ""
   }
   if (params.access_token) {
     spotifyWebApi.setAccessToken(params.access_token)
@@ -56,27 +57,19 @@ constructor() {
     })
   }
 
+  handleChange = event => {
+    this.setState({playlistName: event.target.value});
+    console.log(this.state.playlistName);
+  }
+
   AddToPlaylist = track => {
     console.log(spotifyWebApi.getUserPlaylists('1132457862'));
   }
 
-  CreatePLaylist () {
-    //console.log(spotifyWebApi.getMe());
-
-    // spotifyWebApi.getMe()
-    // .then((response) => {
-    //   this.setState({
-    //     userId: response.id,
-    //   })
-    // })
-    // console.log(this.state.userId);
-
-    //console.log(spotifyWebApi.getPlaylist('13CsqCUEgPKYRSBWUI8jXw'));
-
-
-    spotifyWebApi.createPlaylist({"name":'A new playlist created with react', "public":false, "collaborative":true, "description":null});
-
-    //spotifyWebApi.addTracksToPlaylist('13CsqCUEgPKYRSBWUI8jXw', JSON.stringify({"uris": ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh","spotify:track:1301WleyT98MSxVHPZCA6M"], "position": 3}) );
+  CreatePLaylist() {
+    console.log('createPlaylist');
+    spotifyWebApi.createPlaylist({"name":this.state.playlistName, "public":false, "collaborative":true, "description":null});
+    //spotifyWebApi.addTracksToPlaylist('13CsqCUEgPKYRSBWUI8jXw', {"uris": ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh","spotify:track:1301WleyT98MSxVHPZCA6M"], "position": 3});
   }
 
   render() {
@@ -91,6 +84,11 @@ constructor() {
           </div>
           <button onClick={() => this.getNowPlaying()}>Check Now Playing...</button>
 
+          <form onSubmit={this.createPlaylist}>
+            <input type="text" value={this.state.playlistName} onChange={this.handleChange} />
+            <button onClick={() => this.CreatePLaylist()}>Create playlist</button>
+          </form>
+
           <form>
             <label>Search song</label>
             <input type='text' placeholder='Name track' onChange={this.onChange}></input>
@@ -101,8 +99,6 @@ constructor() {
                 <button onClick={() => this.AddToPlaylist(track)} ><li>{track.name} - {track.artists[0].name}</li></button>
               ))}
               </ul>
-
-              <button onClick={() => this.CreatePLaylist()}>Create playlist</button>
 
             </div>
           </form>
