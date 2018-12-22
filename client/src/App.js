@@ -18,7 +18,10 @@ constructor() {
     tracks: [],
     userId: null,
     playlistName: "",
-    playlistId: null
+    playlistId: null,
+    activePlaylistId: "",
+    activePlaylistName: "",
+    playlists: []
   }
   if (params.access_token) {
     spotifyWebApi.setAccessToken(params.access_token)
@@ -58,25 +61,48 @@ constructor() {
     })
   }
 
+  showPLaylists () {
+    spotifyWebApi.getMe()
+    .then((response) => {
+      this.setState({
+        userId: response.id
+      })
+    });
+
+    spotifyWebApi.getUserPlaylists(this.state.userId)
+      .then((response) => {
+        this.setState({
+          playlists: response.items
+        })
+      })
+  }
+
   handleChange = event => {
     this.setState({playlistName: event.target.value});
-    console.log(this.state.playlistName);
+    //console.log(this.state.playlistName);
+  }
+
+  setActivePLaylist = playlist => {
+    this.setState({
+      activePlaylistId: playlist.id,
+      activePlaylistName: playlist.name
+    });
   }
 
   AddToPlaylist = track => {
     //console.log(track);
-    if (!this.state.playlistId) {
-      alert("Maak een afspeellijst aan!")
+    if (!this.state.activePlaylistId) {
+      alert("Duid een afspeellijst aan")
     }
     else {
       var uris =  [track.uri];
-      spotifyWebApi.addTracksToPlaylist(this.state.playlistId, uris, {'uris': uris, 'position': 0});
+      spotifyWebApi.addTracksToPlaylist(this.state.activePlaylistId, uris, {'uris': uris, 'position': 0});
       //https://api.spotify.com/v1/playlists/13CsqCUEgPKYRSBWUI8jXw/tracks?uris=spotify%3Atrack%3A4iV5W9uYEdYUVa79Axb7Rh%2Cspotify%3Atrack%3A1301WleyT98MSxVHPZCA6M
     }
   }
 
   CreatePLaylist() {
-    spotifyWebApi.createPlaylist({"name":this.state.playlistName, "public":false, "collaborative":true, "description":null})
+    spotifyWebApi.createPlaylist({"name":this.state.playlistName, "public":true, "collaborative":false, "description":null})
     .then((response) => {
       this.setState({
         playlistId: response.id
@@ -88,6 +114,7 @@ constructor() {
         userId: response.id
       })
     });
+    console.log(this.state.playlistId);
   }
 
   render() {
@@ -106,6 +133,19 @@ constructor() {
             <input type="text" value={this.state.playlistName} onChange={this.handleChange} />
             <button onClick={() => this.CreatePLaylist()}>Create playlist</button>
           </form>
+
+          <div className="ChoosePLaylists">
+            <button onClick={() => this.showPLaylists()}>Show playlist</button>
+            <ul>
+            {this.state.playlists.map(playlist => (
+              <a id="track" href="#" onClick={() => this.setActivePLaylist(playlist)}><li>{playlist.name}</li></a>
+            ))}
+            </ul>
+            <h4>Active playlist</h4>
+            <p>
+              {this.state.activePlaylistId? this.state.activePlaylistName : 'No active playlist'}
+            </p>
+          </div>
 
           <form>
             <label>Search song</label>
