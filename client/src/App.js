@@ -95,9 +95,15 @@ constructor() {
       alert("Duid een afspeellijst aan")
     }
     else {
+      //console.log(track);
+      var tracksInPlaylist = spotifyWebApi.getPlaylistTracks(this.state.activePlaylistId);
+      console.log(tracksInPlaylist);
+
       var uris =  [track.uri];
       spotifyWebApi.addTracksToPlaylist(this.state.activePlaylistId, uris, {'uris': uris, 'position': 0});
       //https://api.spotify.com/v1/playlists/13CsqCUEgPKYRSBWUI8jXw/tracks?uris=spotify%3Atrack%3A4iV5W9uYEdYUVa79Axb7Rh%2Cspotify%3Atrack%3A1301WleyT98MSxVHPZCA6M
+
+      spotifyWebApi.play({'uris': uris});
     }
   }
 
@@ -114,7 +120,6 @@ constructor() {
         userId: response.id
       })
     });
-    console.log(this.state.playlistId);
   }
 
   render() {
