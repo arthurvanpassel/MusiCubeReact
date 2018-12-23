@@ -4,8 +4,9 @@ import Spotify from 'spotify-web-api-js';
 const spotifyWebApi = new Spotify();
 
 class TrackAdded extends Component {
-constructor() {
-  super();
+constructor(props) {
+  super(props);
+
   const params = this.getHashParams();
   this.state = {
     loggedIn: params.access_token? true : false,
@@ -18,7 +19,7 @@ constructor() {
     userId: null,
     playlistName: "",
     playlistId: null,
-    activePlaylistId: "",
+    activePlaylistId: this.props.location.state.playlistId,
     activePlaylistName: "",
     playlists: []
   }
@@ -38,9 +39,12 @@ getHashParams() {
 }
 
 componentDidMount() {
-  setTimeout(function() {
-    this.props.history.push('/');
-  }, 5000);
+  spotifyWebApi.getPlaylist(this.state.activePlaylistId)
+  .then((response) => {
+    this.setState({
+      activePlaylistName: response.name
+    })
+  });
 }
 
 
@@ -48,6 +52,9 @@ componentDidMount() {
     return (
       <div className="App">
         <h1>Uw liedje is succesvol toegevoegd aan de afspeellijst</h1>
+        <h2>Huidige afspeellijst</h2>
+        <p>{this.state.activePlaylistId}</p>
+        <p>{this.state.activePlaylistName}</p>
       </div>
     );
   }

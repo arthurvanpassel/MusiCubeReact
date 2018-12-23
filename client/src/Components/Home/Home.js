@@ -97,7 +97,7 @@ constructor() {
     else {
       //console.log(track);
       var tracksInPlaylist = spotifyWebApi.getPlaylistTracks(this.state.activePlaylistId);
-      console.log(tracksInPlaylist);
+      //console.log(tracksInPlaylist);
 
       var uris =  [track.uri];
       spotifyWebApi.addTracksToPlaylist(this.state.activePlaylistId, uris, {'uris': uris, 'position': 0});
@@ -105,7 +105,11 @@ constructor() {
 
       spotifyWebApi.play({'uris': uris});
 
-      this.props.history.push('/TrackAdded');
+      var playList = this.state.activePlaylistId;
+      this.props.history.push({
+        pathname: '/TrackAdded',
+        state: { playlistId: playList }
+      });
     }
   }
 
