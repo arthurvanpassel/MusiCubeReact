@@ -21,6 +21,7 @@ constructor() {
     activePlaylistId: "",
     activePlaylistName: "",
     playlists: [],
+    allTracks: [],
     goToNextPage: false
   }
   if (params.access_token) {
@@ -95,21 +96,34 @@ constructor() {
       alert("Duid een afspeellijst aan")
     }
     else {
-      //console.log(track);
-      var tracksInPlaylist = spotifyWebApi.getPlaylistTracks(this.state.activePlaylistId);
-      //console.log(tracksInPlaylist);
+      var trackInPlaylist = false;
+      spotifyWebApi.getPlaylistTracks(this.state.activePlaylistId)
+      .then((response) => {
+        this.setState({allTracks: response.items}, function () {
+            console.log(this.state.allTracks);
+            //console.log(this.state.allTracks.length);
 
+            for (var i = 0; i < this.state.allTracks.length; i++) {
+              //console.log(this.state.allTracks[i].track.id);
+              if (track.id === this.state.allTracks[i].track.id) {
+                console.log('track is  in playlist')
+                trackInPlaylist = true;
+              }
+            }
+        });
+      });
+      console.log(trackInPlaylist)
       var uris =  [track.uri];
       spotifyWebApi.addTracksToPlaylist(this.state.activePlaylistId, uris, {'uris': uris, 'position': 0});
       //https://api.spotify.com/v1/playlists/13CsqCUEgPKYRSBWUI8jXw/tracks?uris=spotify%3Atrack%3A4iV5W9uYEdYUVa79Axb7Rh%2Cspotify%3Atrack%3A1301WleyT98MSxVHPZCA6M
 
       spotifyWebApi.play({'uris': uris});
 
-      var playList = this.state.activePlaylistId;
-      this.props.history.push({
-        pathname: '/TrackAdded',
-        state: { playlistId: playList }
-      });
+      //var playList = this.state.activePlaylistId;
+      //this.props.history.push({
+        //pathname: '/TrackAdded',
+        //state: { playlistId: playList }
+      //});
     }
   }
 
