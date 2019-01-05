@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import Spotify from 'spotify-web-api-js';
 
 const spotifyWebApi = new Spotify();
+var Twitter = require('twitter');
+
+var client = new Twitter({
+  consumer_key: 'RUvKdeluIFWKbCksmZyPd2ofL',
+  consumer_secret: '9lJ4X3u7qPQjRmeMQnvBtd2j9b2qeFzNZppF5UuD5CDTBxKxzo',
+  access_token_key: '1077614313081372673-fX3RjPjRMg7GSNC5YYO6Mk9xwDPRG8',
+  access_token_secret: 'NBFeLOiImmQXHczcPi9B6uo7FNwFCXPUrIr54u9zInJea'
+});
 
 class TrackAdded extends Component {
 constructor(props) {
@@ -19,7 +27,7 @@ constructor(props) {
     userId: null,
     playlistName: "",
     playlistId: null,
-    activePlaylistId: this.props.location.state.playlistId,
+    //activePlaylistId: this.props.location.state.playlistId,
     activePlaylistName: "",
     playlists: []
   }
@@ -47,14 +55,24 @@ componentDidMount() {
   });
 }
 
+tweetSong () {
+  var params = {screen_name: 'nodejs'};
+  client.get('statuses/user_timeline', params, function(error, tweets, response) {
+    if (!error) {
+      console.log(tweets);
+    }
+  });
+}
+
 
   render() {
     return (
       <div className="App">
         <h1>Uw liedje is succesvol toegevoegd aan de afspeellijst</h1>
         <h2>Huidige afspeellijst</h2>
-        <p>{this.state.activePlaylistId}</p>
-        <p>{this.state.activePlaylistName}</p>
+        //<p>{this.state.activePlaylistId}</p>
+        //<p>{this.state.activePlaylistName}</p>
+        <button onClick={() => this.tweetSong()}>Tweet your song</button>
       </div>
     );
   }

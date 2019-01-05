@@ -119,11 +119,11 @@ constructor() {
 
       spotifyWebApi.play({'uris': uris});
 
-      //var playList = this.state.activePlaylistId;
-      //this.props.history.push({
-        //pathname: '/TrackAdded',
-        //state: { playlistId: playList }
-      //});
+      var playList = this.state.activePlaylistId;
+      this.props.history.push({
+        pathname: '/TrackAdded',
+        state: { playlistId: playList }
+      });
     }
   }
 
