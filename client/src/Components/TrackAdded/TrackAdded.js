@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import Spotify from 'spotify-web-api-js';
 
 const spotifyWebApi = new Spotify();
-var Twitter = require('twitter');
+var Twit = require('twit');
 
-var client = new Twitter({
-  consumer_key: 'RUvKdeluIFWKbCksmZyPd2ofL',
-  consumer_secret: '9lJ4X3u7qPQjRmeMQnvBtd2j9b2qeFzNZppF5UuD5CDTBxKxzo',
-  access_token_key: '1077614313081372673-fX3RjPjRMg7GSNC5YYO6Mk9xwDPRG8',
-  access_token_secret: 'NBFeLOiImmQXHczcPi9B6uo7FNwFCXPUrIr54u9zInJea'
+var T = new Twit({
+  consumer_key:         '7CSFiIdgi7r5DfMKjQXjWmbNj',
+  consumer_secret:      'KduLigpw7qYdbC6ki0tL5IhqKkKEUtTPbojKqhmoMSwyHbmNrh',
+  access_token:         '1077614313081372673-fX3RjPjRMg7GSNC5YYO6Mk9xwDPRG8',
+  access_token_secret:  'NBFeLOiImmQXHczcPi9B6uo7FNwFCXPUrIr54u9zInJea'
 });
 
 class TrackAdded extends Component {
@@ -56,12 +56,20 @@ componentDidMount() {
 }
 
 tweetSong () {
-  var params = {screen_name: 'nodejs'};
-  client.get('statuses/user_timeline', params, function(error, tweets, response) {
-    if (!error) {
-      console.log(tweets);
-    }
-  });
+  var params = {
+    q: 'nieuwe',
+    count: 2
+  };
+
+  T.get('search/tweets', params, this.gotData());
+}
+
+gotData (err, data, response) {
+  if (err) {
+    console.log('something went wrong');
+  } else {
+    console.log(data);
+  }
 }
 
 
