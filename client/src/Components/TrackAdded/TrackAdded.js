@@ -84,7 +84,7 @@ onTakePhoto (dataUri) {
         <Camera
           onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
         />
-        <button></button>
+        <button onClick={() => this.getFromTwitter()}>share on Twitter</button>
       </div>
     );
   }
