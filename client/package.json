@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "instagram": "0.0.4",
+    "instagram-api": "^1.0.3",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-router-dom": "^4.3.1",

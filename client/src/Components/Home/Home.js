@@ -42,12 +42,17 @@ constructor() {
   getNowPlaying() {
     spotifyWebApi.getMyCurrentPlaybackState()
     .then((response) => {
-      this.setState({
-        nowPlaying: {
-          name: response.item.name,
-          image: response.item.album.images[0].url
-        }
-      })
+      if (response.item == undefined) {
+        alert("you're not listening to something");
+      }
+      else {
+        this.setState({
+          nowPlaying: {
+            name: response.item.name,
+            image: response.item.album.images[0].url
+          }
+        })
+      }
     })
   }
 
