@@ -60,29 +60,12 @@ componentDidMount() {
   });
 }
 
-searchOnTwitter () {
-  alert('herhwthrtsjyrxju');
-}
-
-shareOnTwitter () {
-  client.post('statuses/update', {status: 'I Love Twitter'})
-  .then(function (tweet) {
-    console.log(tweet);
-  })
-  .catch(function (error) {
-    throw error;
-  })
-}
 
 onTakePhoto (dataUri) {
     // Do stuff with the dataUri photo...
     console.log(dataUri);
 
-    const newImageName = `${moment().format('DDMMYY_HHmmSSS')}.jpg`;
-    const newFilepath = `${dirPicutures}/${newImageName}`;
-    // move and save image to new filepath
-    const imageMoved = await moveAttachment(filePath, newFilepath);
-    console.log('image moved', imageMoved);
+
   }
 
 
