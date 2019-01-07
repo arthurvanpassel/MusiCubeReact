@@ -58,11 +58,10 @@ componentDidMount() {
 }
 
 shareOnTwitter () {
-  T.get('search/tweets', {q:'nieuwe', count:2}, function (err, data, response) {
-    console.log(data);
-  });
+  fetch('/get')       // node-cors-server/app.js
+  .then(res => res.json())
+  .then(data => console.log({data}))
 }
-
 
   render() {
     return (
