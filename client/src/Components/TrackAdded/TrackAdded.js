@@ -2,14 +2,7 @@ import React, { Component } from 'react';
 import Spotify from 'spotify-web-api-js';
 
 const spotifyWebApi = new Spotify();
-var Twit = require('twit');
-
-var T = new Twit({
-  consumer_key:         'RUvKdeluIFWKbCksmZyPd2ofL',
-  consumer_secret:      '9lJ4X3u7qPQjRmeMQnvBtd2j9b2qeFzNZppF5UuD5CDTBxKxzo',
-  access_token:         '1077614313081372673-fX3RjPjRMg7GSNC5YYO6Mk9xwDPRG8',
-  access_token_secret:  'NBFeLOiImmQXHczcPi9B6uo7FNwFCXPUrIr54u9zInJea'
-});
+var instagram = require('instagram').createClient('0131ef91227c4ebeab36d1d128de2f35', '85ff23655d984d03a4ed68427afc80f6')
 
 class TrackAdded extends Component {
 constructor(props) {
@@ -55,12 +48,8 @@ componentDidMount() {
   });
 }
 
-tweetSong () {
-
-  T.get('search/tweets', {q:'nieuwe', count:2}, function (err, data, response) {
-    console.log(err);
-    console.log(data);
-  });
+shareOnfInstagram () {
+  instagram.tags.tag('snow', {access_token: "10160123960.0131ef9.eec0370363514f4f9c73923e6cb04c3c"}, function (tag, error) { console.log(tag); });
 }
 
 
@@ -71,7 +60,7 @@ tweetSong () {
         <h2>Huidige afspeellijst</h2>
         //<p>{this.state.activePlaylistId}</p>
         //<p>{this.state.activePlaylistName}</p>
-        <button onClick={() => this.tweetSong()}>Tweet your song</button>
+        <button onClick={() => this.shareOnfInstagram()}>share on Instagram</button>
       </div>
     );
   }

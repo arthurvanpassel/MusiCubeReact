@@ -143,49 +143,53 @@ constructor() {
   }
 
   render() {
+    console.log(this.state);
 
     return (
       <div className="App">
         <div className='App-header'>
-          <a href='http://localhost:8888/login'><button style={{ margin: 15}}>Login with Spotify</button></a>
-
-          <div>Now Playing: {this.state.nowPlaying.name}</div>
-          <div>
-            <img src={this.state.nowPlaying.image} style={{width: 300}}></img>
-          </div>
-          <button onClick={() => this.getNowPlaying()}>Check Now Playing...</button>
-
-          <form onSubmit={this.createPlaylist}>
-            <input type="text" value={this.state.playlistName} onChange={this.handleChange} />
-            <button onClick={() => this.CreatePLaylist()}>Create playlist</button>
-          </form>
-
-          <div className="ChoosePLaylists">
-            <button onClick={() => this.showPLaylists()}>Show playlist</button>
-            <ul>
-            {this.state.playlists.map(playlist => (
-              <a id="track" href="#" onClick={() => this.setActivePLaylist(playlist)}><li>{playlist.name}</li></a>
-            ))}
-            </ul>
-            <h4>Active playlist</h4>
-            <p>
-              {this.state.activePlaylistId? this.state.activePlaylistName : 'No active playlist'}
-            </p>
-          </div>
-
-          <form>
-            <label>Search song</label>
-            <input type='text' placeholder='Name track' onChange={this.onChange}></input>
+        {!this.state.loggedIn?
+          (
+            <a href='http://localhost:8888/login'><button style={{ margin: 15}}>Login with Spotify</button></a>
+          ) : (
             <div>
+              <div>Now Playing: {this.state.nowPlaying.name}</div>
+              <div><img src={this.state.nowPlaying.image} style={{width: 300}}></img></div>
+              <button onClick={() => this.getNowPlaying()}>Check Now Playing...</button>
 
-              <ul>
-              {this.state.tracks.map(track => (
-                <a id="track" href="#" onClick={() => this.AddToPlaylist(track)}><li>{track.name} - {track.artists[0].name}</li></a>
-              ))}
-              </ul>
+              <form onSubmit={this.createPlaylist}>
+                <input type="text" value={this.state.playlistName} onChange={this.handleChange} />
+                <button onClick={() => this.CreatePLaylist()}>Create playlist</button>
+              </form>
 
+              <div className="ChoosePLaylists">
+                <button onClick={() => this.showPLaylists()}>Show playlist</button>
+                <ul>
+                {this.state.playlists.map(playlist => (
+                  <a id="track" href="#" onClick={() => this.setActivePLaylist(playlist)}><li>{playlist.name}</li></a>
+                ))}
+                </ul>
+                <h4>Active playlist</h4>
+                <p>
+                  {this.state.activePlaylistId? this.state.activePlaylistName : 'No active playlist'}
+                </p>
+              </div>
+
+              <form>
+                <label>Search song</label>
+                <input type='text' placeholder='Name track' onChange={this.onChange}></input>
+                <div>
+
+                  <ul>
+                  {this.state.tracks.map(track => (
+                    <a id="track" href="#" onClick={() => this.AddToPlaylist(track)}><li>{track.name} - {track.artists[0].name}</li></a>
+                  ))}
+                  </ul>
+
+                </div>
+              </form>
             </div>
-          </form>
+          )}
         </div>
       </div>
     );
