@@ -56,20 +56,11 @@ componentDidMount() {
 }
 
 tweetSong () {
-  var params = {
-    q: 'nieuwe',
-    count: 2
-  };
 
-  T.get('search/tweets', params, this.gotData());
-}
-
-gotData (err, data, response) {
-  if (err) {
-    console.log('something went wrong');
-  } else {
+  T.get('search/tweets', {q:'nieuwe', count:2}, function (err, data, response) {
+    console.log(err);
     console.log(data);
-  }
+  });
 }
 
 
