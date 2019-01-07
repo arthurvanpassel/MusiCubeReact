@@ -74,6 +74,12 @@ onTakePhoto (dataUri) {
     .then(data => console.log({data}))
 }
 
+  postOnTwitter () {
+    fetch('/post',{method: 'POST'})       // node-cors-server/app.js
+    // .then(res => res.json())
+    // .then(data => console.log({data}))
+  }
+
   render() {
     return (
       <div className="App">
@@ -81,10 +87,11 @@ onTakePhoto (dataUri) {
         <h2>Huidige afspeellijst</h2>
         //<p>{this.state.activePlaylistId}</p>
         //<p>{this.state.activePlaylistName}</p>
-        <Camera
+        {/* <Camera
           onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
-        />
-        <button onClick={() => this.getFromTwitter()}>share on Twitter</button>
+        /> */}
+        <button onClick={() => this.getFromTwitter()}>Get some tweets</button>
+        <button onClick={() => this.postOnTwitter()}>Tweet Something</button>
       </div>
     );
   }

@@ -19,13 +19,23 @@ var express = require('express'),
 /* -------------------------------------------------------------------------- */
 
 app.get('/get', (req,res) => {
-  var datavar;
   T.get('search/tweets', {q:'nieuwe', count:2}, function (err, data, response) {
     console.log(data);
     res.json(data);
 
    });
-  console.log('Sent list of items');
+  console.log('Get 2 tweets');
+});
+
+app.post('/post', (req,res) => {
+  T.post('statuses/update', {status: "It's working!!!!"})
+  .then(function (tweet) {
+    console.log(tweet);
+  })
+  .catch(function (error) {
+    throw error;
+  })
+  console.log('Post tweet');
 });
 
 app.get('/no-cors', (req, res) => {
