@@ -85,6 +85,11 @@ onTakePhoto (dataUri) {
     console.log('image moved', imageMoved);
   }
 
+  getFromTwitter () {
+    fetch('/get')       // node-cors-server/app.js
+    .then(res => res.json())
+    .then(data => console.log({data}))
+}
 
   render() {
     return (
@@ -96,6 +101,7 @@ onTakePhoto (dataUri) {
         <Camera
           onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
         />
+        <button></button>
       </div>
     );
   }
