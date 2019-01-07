@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import Spotify from 'spotify-web-api-js';
 
+import Camera from 'react-html5-camera-photo';
+import 'react-html5-camera-photo/build/css/index.css';
+
 const spotifyWebApi = new Spotify();
 
 
-var Twit = require('twit');
+var Twitter = require('twitter');
 
-var T = new Twit({
-  consumer_key:         'RUvKdeluIFWKbCksmZyPd2ofL',
-  consumer_secret:      '9lJ4X3u7qPQjRmeMQnvBtd2j9b2qeFzNZppF5UuD5CDTBxKxzo',
-  access_token:         '1077614313081372673-fX3RjPjRMg7GSNC5YYO6Mk9xwDPRG8',
-  access_token_secret:  'NBFeLOiImmQXHczcPi9B6uo7FNwFCXPUrIr54u9zInJea'
+var client = new Twitter({
+  consumer_key: 'RUvKdeluIFWKbCksmZyPd2ofL',
+  consumer_secret: '9lJ4X3u7qPQjRmeMQnvBtd2j9b2qeFzNZppF5UuD5CDTBxKxzo',
+  access_token_key: '1077614313081372673-fX3RjPjRMg7GSNC5YYO6Mk9xwDPRG8',
+  access_token_secret: 'NBFeLOiImmQXHczcPi9B6uo7FNwFCXPUrIr54u9zInJea'
 });
 
 class TrackAdded extends Component {
@@ -57,11 +60,30 @@ componentDidMount() {
   });
 }
 
-shareOnTwitter () {
-  T.get('search/tweets', {q:'nieuwe', count:2}, function (err, data, response) {
-    console.log(data);
-  });
+searchOnTwitter () {
+  alert('herhwthrtsjyrxju');
 }
+
+shareOnTwitter () {
+  client.post('statuses/update', {status: 'I Love Twitter'})
+  .then(function (tweet) {
+    console.log(tweet);
+  })
+  .catch(function (error) {
+    throw error;
+  })
+}
+
+onTakePhoto (dataUri) {
+    // Do stuff with the dataUri photo...
+    console.log(dataUri);
+
+    const newImageName = `${moment().format('DDMMYY_HHmmSSS')}.jpg`;
+    const newFilepath = `${dirPicutures}/${newImageName}`;
+    // move and save image to new filepath
+    const imageMoved = await moveAttachment(filePath, newFilepath);
+    console.log('image moved', imageMoved);
+  }
 
 
   render() {
@@ -71,7 +93,9 @@ shareOnTwitter () {
         <h2>Huidige afspeellijst</h2>
         //<p>{this.state.activePlaylistId}</p>
         //<p>{this.state.activePlaylistName}</p>
-        <button onClick={() => this.shareOnTwitter()}>share on Twitter</button>
+        <Camera
+          onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
+        />
       </div>
     );
   }

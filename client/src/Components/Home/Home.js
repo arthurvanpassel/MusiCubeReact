@@ -105,7 +105,7 @@ constructor() {
       spotifyWebApi.getPlaylistTracks(this.state.activePlaylistId)
       .then((response) => {
         this.setState({allTracks: response.items}, function () {
-            console.log(this.state.allTracks);
+            //console.log(this.state.allTracks);
             //console.log(this.state.allTracks.length);
 
             for (var i = 0; i < this.state.allTracks.length; i++) {
@@ -117,7 +117,7 @@ constructor() {
             }
         });
       });
-      console.log(trackInPlaylist)
+      //console.log(trackInPlaylist)
       var uris =  [track.uri];
       spotifyWebApi.addTracksToPlaylist(this.state.activePlaylistId, uris, {'uris': uris, 'position': 0});
       //https://api.spotify.com/v1/playlists/13CsqCUEgPKYRSBWUI8jXw/tracks?uris=spotify%3Atrack%3A4iV5W9uYEdYUVa79Axb7Rh%2Cspotify%3Atrack%3A1301WleyT98MSxVHPZCA6M
@@ -148,7 +148,7 @@ constructor() {
   }
 
   render() {
-    console.log(this.state);
+    //console.log(this.state);
 
     return (
       <div className="App">
