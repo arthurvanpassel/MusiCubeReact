@@ -50,6 +50,40 @@ app.post('/post', (req,res) => {
   console.log('Post tweet');
 });
 
+app.post('/postPic', (req,res) => {
+  let content = req.body;
+  console.log(content);
+  var b64content = fs.readFileSync(content.picUrl, { encoding: 'base64' })
+
+    // first we must post the media to Twitter
+    T.post('media/upload', { media_data: b64content }, function (err, data, response) {
+      // now we can assign alt text to the media, for use by screen readers and
+      // other text-based presentations and interpreters
+      var mediaIdStr = data.media_id_string
+      var altText = content.picAlt
+      var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
+
+      T.post('media/metadata/create', meta_params, function (err, data, response) {
+        if (!err) {
+          // now we can reference the media and post a tweet (media will attach to the tweet)
+          var params = { status: content.text, media_ids: [mediaIdStr] }
+
+          T.post('statuses/update', params, function (err, data, response) {
+            console.log(data)
+          })
+        }
+      })
+    })
+  .catch(function (error) {
+    throw error;
+  })
+  app.use(bodyParser.urlencoded({ extended: false }))
+  app.use(bodyParser.json());
+  console.log('Post tweet with pic');
+});
+
+/* -------------------------------------------------------------------------- */
+
 app.get('/no-cors', (req, res) => {
   res.json({
     text: 'You should not see this via a CORS request.'
