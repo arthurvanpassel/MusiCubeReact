@@ -4,17 +4,10 @@ import Spotify from 'spotify-web-api-js';
 import Camera from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 
+var base64Img = require('base64-img');
+var base64ToImage = require('base64-to-image');
+
 const spotifyWebApi = new Spotify();
-
-
-var Twitter = require('twitter');
-
-var client = new Twitter({
-  consumer_key: 'RUvKdeluIFWKbCksmZyPd2ofL',
-  consumer_secret: '9lJ4X3u7qPQjRmeMQnvBtd2j9b2qeFzNZppF5UuD5CDTBxKxzo',
-  access_token_key: '1077614313081372673-fX3RjPjRMg7GSNC5YYO6Mk9xwDPRG8',
-  access_token_secret: 'NBFeLOiImmQXHczcPi9B6uo7FNwFCXPUrIr54u9zInJea'
-});
 
 class TrackAdded extends Component {
 constructor(props) {
@@ -34,7 +27,8 @@ constructor(props) {
     playlistId: null,
     //activePlaylistId: this.props.location.state.playlistId,
     activePlaylistName: "",
-    playlists: []
+    playlists: [],
+    photoUri: ""
   }
   if (params.access_token) {
     spotifyWebApi.setAccessToken(params.access_token)
@@ -64,7 +58,11 @@ componentDidMount() {
 onTakePhoto (dataUri) {
     // Do stuff with the dataUri photo...
     console.log(dataUri);
+    this.setState({
+      photoUri: dataUri
+    })
 
+    base64Img.img(dataUri, '/', 'blablabla', function(err, filepath) {console.log(filepath)});
 
   }
 
@@ -92,6 +90,10 @@ onTakePhoto (dataUri) {
         /> */}
         <button onClick={() => this.getFromTwitter()}>Get some tweets</button>
         <button onClick={() => this.postOnTwitter()}>Tweet Something</button>
+
+        <Camera onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }/>
+
+        <img src={this.state.photoUri} />
       </div>
     );
   }
