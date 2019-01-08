@@ -59,7 +59,7 @@ app.post('/savePic', (req,res) => {
   // remove "data:image/jpeg;base64," from image Data URI.
   var data = dataUriVar.substring(23);
 
-  fs.writeFile("images/outputimage1.png", data, {encoding: 'base64'}, function(err) {
+  fs.writeFile("images/" + content.picAlt + ".png", data, {encoding: 'base64'}, function(err) {
     if (err) {
       console.log(err)
     }
@@ -73,7 +73,7 @@ app.post('/postPic', (req,res) => {
   let content = req.body;
   console.log(content);
 
-  var b64content = fs.readFileSync("images/outputimage1.png", { encoding: 'base64' })
+  var b64content = fs.readFileSync("images/" + content.picAlt + ".png", { encoding: 'base64' })
 
     // first we must post the media to Twitter
     T.post('media/upload', { media_data: b64content }, function (err, data, response) {
