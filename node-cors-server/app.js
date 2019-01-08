@@ -2,6 +2,7 @@
 
 'use strict';
 
+var fs = require("file-system");
 var Twit = require('twit');
 
 var T = new Twit({
@@ -75,6 +76,7 @@ app.post('/postPic', (req,res) => {
       })
     })
   .catch(function (error) {
+    console.log(error);
     throw error;
   })
   app.use(bodyParser.urlencoded({ extended: false }))

@@ -67,11 +67,25 @@ componentDidMount() {
 
 onTakePhoto (dataUri) {
     // Do stuff with the dataUri photo...
-    console.log(dataUri);
+    //console.log(dataUri);
     this.setState({
       pictureUrl: dataUri
     })
-    console.log(this.state);
+    //console.log(this.state);
+
+    var dataUriVar = dataUri;
+    // remove "data:image/jpeg;base64," from image Data URI.
+    var data = dataUri.substring(23);
+
+    // save to file
+    require("browserify-fs").writeFile("/out.png", data, 'base64', function(err) {
+      if (err) {
+        console.log(err)
+      }
+      else {
+        console.log('no error');
+      }
+    });
   }
 
   getFromTwitter () {
