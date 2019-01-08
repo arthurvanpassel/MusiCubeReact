@@ -55,15 +55,6 @@ getHashParams() {
   return hashParams;
 }
 
-componentDidMount() {
-  spotifyWebApi.getPlaylist(this.state.activePlaylistId)
-  .then((response) => {
-    this.setState({
-      activePlaylistName: response.name
-    })
-  });
-}
-
 
 onTakePhoto (dataUri) {
     // Do stuff with the dataUri photo...
@@ -75,7 +66,7 @@ onTakePhoto (dataUri) {
     var content = {
       picUrl: dataUri
     };
-    
+
     fetch('/savePic',{
       method: 'POST',
       body: JSON.stringify(content),
@@ -146,13 +137,6 @@ onTakePhoto (dataUri) {
     return (
       <div className="App">
         <h1>Uw liedje is succesvol toegevoegd aan de afspeellijst</h1>
-        <div className="CurrentPlaylstInfo hide">
-        <h2>Huidige afspeellijst</h2>
-        //<p>{this.state.activePlaylistId}</p>
-        //<p>{this.state.activePlaylistName}</p>
-        </div>
-
-        <button className="hide" onClick={() => this.getFromTwitter()}>Get some tweets</button>
 
         <div className="flex">
           <div className="forms">
