@@ -106,24 +106,6 @@ onTakePhoto (dataUri) {
       })
     })
     .then(res => res.json());
-    this.posted();
-  }
-
-  posted () {
-    var content = {
-      text: this.state.tweetText
-    };
-    console.log('posted');
-
-    fetch('/posted',{
-      method: 'POST',
-      body: JSON.stringify(content),
-      json: true,
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      })
-    })
-    .then(res => res.json());
   }
 
   postPicOnTwitter = () => {

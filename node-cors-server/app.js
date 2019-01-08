@@ -70,6 +70,8 @@ app.post('/savePic', (req,res) => {
   app.use(bodyParser.json());
   console.log('save pic');
   res.json({data: 'save pic'});
+  posted = false;
+  console.log('locked & loaded: '+posted);
 });
 
 app.post('/postPic', (req,res) => {
@@ -111,18 +113,6 @@ app.post('/postPic', (req,res) => {
       res.json({data:'Post tweet with pic'});
       posted = true;
     }
-});
-
-app.post('/posted', (req,res) => {
-  let content = req.body;
-  posted = false;
-  console.log('posted: '+posted);
-
-
-  app.use(bodyParser.urlencoded({ extended: false }))
-  app.use(bodyParser.json());
-  console.log('save pic');
-  res.json({data: 'save pic'});
 });
 
 /* -------------------------------------------------------------------------- */
