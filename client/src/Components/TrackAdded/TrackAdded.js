@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Spotify from 'spotify-web-api-js';
 
-import Camera from 'react-html5-camera-photo';
+import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 
 var base64Img = require('base64-img');
@@ -28,11 +28,23 @@ constructor(props) {
     //activePlaylistId: this.props.location.state.playlistId,
     activePlaylistName: "",
     playlists: [],
-    photoUri: ""
+    tweetText: "",
+    tweetTextPic: "",
+    pictureUrl: "",
+    pictureAlt: ""
   }
+
+  this.onToggleLoop = this.onToggleLoop.bind(this);
+  
   if (params.access_token) {
     spotifyWebApi.setAccessToken(params.access_token)
   }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleChangePic = this.handleChangePic.bind(this);
+    this.postOnTwitter = this.postOnTwitter.bind(this);
+    this.postOnPicTwitter = this.postPicOnTwitter.bind(this);
+    this.onChange = this.onChange.bind(this);
 }
 
 getHashParams() {
@@ -59,11 +71,9 @@ onTakePhoto (dataUri) {
     // Do stuff with the dataUri photo...
     console.log(dataUri);
     this.setState({
-      photoUri: dataUri
+      pictureUrl: dataUri
     })
-
-    base64Img.img(dataUri, '/', 'blablabla', function(err, filepath) {console.log(filepath)});
-
+    console.log(this.state);
   }
 
   getFromTwitter () {
@@ -73,9 +83,52 @@ onTakePhoto (dataUri) {
 }
 
   postOnTwitter () {
-    fetch('/post',{method: 'POST'})       // node-cors-server/app.js
-    // .then(res => res.json())
-    // .then(data => console.log({data}))
+    var content = {
+      text: this.state.tweetText
+    };
+    fetch('/post',{
+      method: 'POST',
+      body: JSON.stringify(content),
+      json: true,
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      })
+    })
+    .then(res => res.json());
+  }
+
+  postPicOnTwitter () {
+    //console.log(this.state);
+    var content = {
+      text: this.state.tweetTextPic,
+      picUrl: this.state.pictureUrl,
+      picAlt: this.state.pictureAlt
+    };
+    fetch('/postPic',{
+      method: 'POST',
+      body: JSON.stringify(content),
+      json: true,
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      })
+    })
+    // .then(res => res.json());
+  }
+
+  handleChange = event => {
+    this.setState({tweetText: event.target.value});
+  }
+
+  handleChangePic = event => {
+    this.setState({tweetTextPic: event.target.value});
+  }
+
+  onChange = e => {
+    const {value} = e.target;
+    //console.log(value)
+    this.setState({
+        pictureAlt: value
+    })
   }
 
   render() {
@@ -85,15 +138,25 @@ onTakePhoto (dataUri) {
         <h2>Huidige afspeellijst</h2>
         //<p>{this.state.activePlaylistId}</p>
         //<p>{this.state.activePlaylistName}</p>
-        {/* <Camera
-          onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
-        /> */}
+
         <button onClick={() => this.getFromTwitter()}>Get some tweets</button>
-        <button onClick={() => this.postOnTwitter()}>Tweet Something</button>
 
-        <Camera onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }/>
+        <form onSubmit={this.postOnTwitter}>
+          <textarea rows="6" cols= "30" onChange={this.handleChange}></textarea>
+          <button onClick={() => this.postOnTwitter()}>Tweet Something</button>
+        </form>
 
-        <img src={this.state.photoUri} />
+        <Camera
+          onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
+          imageType = {IMAGE_TYPES.JPG}
+        />
+
+        <input type='text' placeholder='Describe your pic' onChange={this.onChange}></input>
+        <form onSubmit={this.postPicOnTwitter}>
+          <textarea rows="6" cols= "30" onChange={this.handleChangePic}>Put your tweet here!</textarea>
+          <button onClick={() => this.postPicOnTwitter()}>Tweet your pic!</button>
+        </form>
+
       </div>
     );
   }

@@ -11,8 +11,9 @@
     "npm": "1.2.x"
   },
   "dependencies": {
-    "express": "*",
+    "body-parser": "^1.18.3",
     "cors": "*",
+    "express": "*",
     "twit": "^2.2.11"
   },
   "devDependencies": {
