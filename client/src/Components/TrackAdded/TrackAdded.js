@@ -34,7 +34,8 @@ constructor(props) {
     playlistId: null,
     //activePlaylistId: this.props.location.state.playlistId,
     activePlaylistName: "",
-    playlists: []
+    playlists: [],
+    tweetText: ""
   }
   if (params.access_token) {
     spotifyWebApi.setAccessToken(params.access_token)
@@ -74,10 +75,24 @@ onTakePhoto (dataUri) {
     .then(data => console.log({data}))
 }
 
-  postOnTwitter () {
-    fetch('/post',{method: 'POST'})       // node-cors-server/app.js
-    // .then(res => res.json())
-    // .then(data => console.log({data}))
+  postOnTwitter (content) {
+    var content = {
+      text: this.state.tweetText
+    };
+    fetch('/post',{
+      method: 'POST',
+      body: JSON.stringify(content),
+      json: true,
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      })
+    })
+    .then(res => res.json());
+  }
+
+  handleChange = event => {
+    this.setState({tweetText: event.target.value});
+    //console.log(this.state.playlistName);
   }
 
   render() {
@@ -91,7 +106,12 @@ onTakePhoto (dataUri) {
           onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
         /> */}
         <button onClick={() => this.getFromTwitter()}>Get some tweets</button>
-        <button onClick={() => this.postOnTwitter()}>Tweet Something</button>
+
+        <form onSubmit={this.postOnTwitter}>
+                <textarea rows="6" cols= "30" onChange={this.handleChange}></textarea>
+                <button onClick={() => this.postOnTwitter()}>Tweet Something</button>
+              </form>
+        
       </div>
     );
   }

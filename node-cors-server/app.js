@@ -14,7 +14,15 @@ var T = new Twit({
 var express = require('express'),
     cors = require('cors'),
     port = process.env.PORT || 5000,
-    app = express();
+    app = express(),
+    bodyParser = require('body-parser');
+
+
+    // parse application/x-www-form-urlencoded
+    app.use(bodyParser.urlencoded({ extended: false }))
+
+    // parse application/json
+    app.use(bodyParser.json())
 
 /* -------------------------------------------------------------------------- */
 
@@ -28,13 +36,17 @@ app.get('/get', (req,res) => {
 });
 
 app.post('/post', (req,res) => {
-  T.post('statuses/update', {status: "It's working!!!!"})
+  let content = req.body;
+  console.log(content);
+  T.post('statuses/update', {status: content.text})
   .then(function (tweet) {
     console.log(tweet);
   })
   .catch(function (error) {
     throw error;
   })
+  app.use(bodyParser.urlencoded({ extended: false }))
+  app.use(bodyParser.json());
   console.log('Post tweet');
 });
 
