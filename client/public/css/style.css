@@ -1,0 +1,21 @@
+.hide {
+  display: none;
+}
+.flex {
+  display: flex;
+}
+
+.forms {
+  width: 30%;
+}
+
+.postPhoto {
+  margin-top: 20px;
+  border-top: 1px solid #777;
+}
+.postPhoto form {
+  margin-top: 10px;
+}
+.postPhoto img {
+  width: 90%;
+}

@@ -95,8 +95,8 @@ onTakePhoto (dataUri) {
     .then(res => res.json());
   }
 
-  postPicOnTwitter () {
-    //console.log(this.state);
+  postPicOnTwitter = () => {
+    console.log(this.state);
     var content = {
       text: this.state.tweetTextPic,
       picUrl: this.state.pictureUrl,
@@ -133,28 +133,40 @@ onTakePhoto (dataUri) {
     return (
       <div className="App">
         <h1>Uw liedje is succesvol toegevoegd aan de afspeellijst</h1>
+        <div className="CurrentPlaylstInfo hide">
         <h2>Huidige afspeellijst</h2>
         //<p>{this.state.activePlaylistId}</p>
         //<p>{this.state.activePlaylistName}</p>
+        </div>
 
-        <button onClick={() => this.getFromTwitter()}>Get some tweets</button>
+        <button className="hide" onClick={() => this.getFromTwitter()}>Get some tweets</button>
 
-        <form onSubmit={this.postOnTwitter}>
-          <textarea rows="6" cols= "30" onChange={this.handleChange}></textarea>
-          <button onClick={() => this.postOnTwitter()}>Tweet Something</button>
-        </form>
-
-        <Camera
-          onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
-          imageType = {IMAGE_TYPES.JPG}
-        />
-
-        <input type='text' placeholder='Describe your pic' onChange={this.onChange}></input>
-        <form onSubmit={this.postPicOnTwitter}>
-          <textarea rows="6" cols= "30" onChange={this.handleChangePic}>Put your tweet here!</textarea>
-          <button onClick={() => this.postPicOnTwitter()}>Tweet your pic!</button>
-        </form>
-
+        <div className="flex">
+          <div className="forms">
+            <div className="postText">
+              <h2>Post your sone on twitter</h2>
+              <form onSubmit={this.postOnTwitter}>
+                <textarea rows="6" cols= "30" onChange={this.handleChange}></textarea>
+                <button onClick={() => this.postOnTwitter()}>Tweet!</button>
+              </form>
+            </div>
+            <div className="postPhoto">
+              <h2>Or post it with a photo</h2>
+              <input type='text' placeholder='Describe your pic' onChange={this.onChange}></input>
+              <form onSubmit={this.postPicOnTwitter}>
+                <textarea rows="6" cols= "30" onChange={this.handleChangePic} placeholder='Describe your pic'></textarea>
+                <button onClick={() => this.postPicOnTwitter()}>Tweet your pic!</button>
+              </form>
+              <img src={this.state.pictureUrl} />
+            </div>
+          </div>
+          <div className="Camera">
+            <Camera
+              onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
+              imageType = {IMAGE_TYPES.JPG}
+            />
+          </div>
+        </div>
       </div>
     );
   }
