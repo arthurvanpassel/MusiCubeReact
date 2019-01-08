@@ -37,12 +37,6 @@ constructor(props) {
   if (params.access_token) {
     spotifyWebApi.setAccessToken(params.access_token)
   }
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleChangePic = this.handleChangePic.bind(this);
-    this.postOnTwitter = this.postOnTwitter.bind(this);
-    this.postOnPicTwitter = this.postPicOnTwitter.bind(this);
-    this.onChange = this.onChange.bind(this);
 }
 
 getHashParams() {
