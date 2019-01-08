@@ -9,7 +9,7 @@ var base64ToImage = require('base64-to-image');
 
 const spotifyWebApi = new Spotify();
 
-class Camera extends Component {
+class Picture extends Component {
 constructor(props) {
   super(props);
 
@@ -97,37 +97,15 @@ onTakePhoto (dataUri) {
   render() {
     return (
       <div className="App">
-        <h1>Uw liedje is succesvol toegevoegd aan de afspeellijst</h1>
-
-        <div className="flex">
-          <div className="forms">
-            <div className="postText">
-              <h2>Post your sone on twitter</h2>
-              <form onSubmit={this.postOnTwitter}>
-                <textarea rows="6" cols= "30" onChange={this.handleChange}></textarea>
-                <button onClick={() => this.postOnTwitter()}>Tweet!</button>
-              </form>
-            </div>
-            <div className="postPhoto">
-              <h2>Or post it with a photo</h2>
-              <input type='text' placeholder='Describe your pic' onChange={this.onChange}></input>
-              <form onSubmit={this.postPicOnTwitter}>
-                <textarea rows="6" cols= "30" onChange={this.handleChangePic} placeholder='Describe your pic'></textarea>
-                <button onClick={() => this.postPicOnTwitter()}>Tweet your pic!</button>
-              </form>
-              <img src={this.state.pictureUrl} />
-            </div>
-          </div>
-          <div className="Camera">
-            <Camera
-              onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
-              imageType = {IMAGE_TYPES.JPG}
-            />
-          </div>
+        <div className="Camera">
+          <Camera
+            onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
+            imageType = {IMAGE_TYPES.JPG}
+          />
         </div>
       </div>
     );
   }
 }
 
-export default Camera;
+export default Picture;
