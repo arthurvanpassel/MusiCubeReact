@@ -78,7 +78,7 @@ onTakePhoto (dataUri) {
     var data = dataUri.substring(23);
 
     // save to file
-    require("browserify-fs").writeFile("/out.png", data, 'base64', function(err) {
+    require("browserify-fs").writeFile("output.png", data, {encoding: 'base64'}, function(err) {
       if (err) {
         console.log(err)
       }
