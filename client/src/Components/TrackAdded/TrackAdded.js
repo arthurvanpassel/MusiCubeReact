@@ -34,8 +34,6 @@ constructor(props) {
     pictureAlt: ""
   }
 
-  this.onToggleLoop = this.onToggleLoop.bind(this);
-  
   if (params.access_token) {
     spotifyWebApi.setAccessToken(params.access_token)
   }
