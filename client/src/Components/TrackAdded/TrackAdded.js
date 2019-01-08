@@ -71,21 +71,20 @@ onTakePhoto (dataUri) {
     this.setState({
       pictureUrl: dataUri
     })
-    //console.log(this.state);
 
-    var dataUriVar = dataUri;
-    // remove "data:image/jpeg;base64," from image Data URI.
-    var data = dataUri.substring(23);
-
-    // save to file
-    require("browserify-fs").writeFile("output.png", data, {encoding: 'base64'}, function(err) {
-      if (err) {
-        console.log(err)
-      }
-      else {
-        console.log('no error');
-      }
-    });
+    var content = {
+      picUrl: dataUri
+    };
+    
+    fetch('/savePic',{
+      method: 'POST',
+      body: JSON.stringify(content),
+      json: true,
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      })
+    })
+    .then(res => res.json());
   }
 
   getFromTwitter () {
@@ -113,7 +112,6 @@ onTakePhoto (dataUri) {
     console.log(this.state);
     var content = {
       text: this.state.tweetTextPic,
-      picUrl: this.state.pictureUrl,
       picAlt: this.state.pictureAlt
     };
     fetch('/postPic',{

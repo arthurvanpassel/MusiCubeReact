@@ -51,7 +51,7 @@ app.post('/post', (req,res) => {
   console.log('Post tweet');
 });
 
-app.post('/postPic', (req,res) => {
+app.post('/savePic', (req,res) => {
   let content = req.body;
   console.log(content);
 
@@ -64,6 +64,14 @@ app.post('/postPic', (req,res) => {
       console.log(err)
     }
   });
+  app.use(bodyParser.urlencoded({ extended: false }))
+  app.use(bodyParser.json());
+  console.log('save pic');
+});
+
+app.post('/postPic', (req,res) => {
+  let content = req.body;
+  console.log(content);
 
   var b64content = fs.readFileSync("images/outputimage1.png", { encoding: 'base64' })
 
