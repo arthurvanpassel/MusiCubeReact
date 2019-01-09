@@ -37,6 +37,8 @@ constructor(props) {
   if (params.access_token) {
     spotifyWebApi.setAccessToken(params.access_token)
   }
+
+  this.onTakePhoto = this.onTakePhoto.bind(this);
 }
 
 getHashParams() {
@@ -70,6 +72,10 @@ onTakePhoto (dataUri) {
       })
     })
     .then(res => res.json());
+
+    this.props.history.push({
+      pathname: '/trackAdded'
+    });
   }
 
   handleChange = event => {

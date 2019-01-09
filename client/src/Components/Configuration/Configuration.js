@@ -124,6 +124,12 @@ class Configuration extends Component {
 
   setActivePLaylist = playlist => {
     sessionStorage.setItem('activePlaylistId', playlist.id )
+    sessionStorage.setItem('activePlaylistName', playlist.name )
+
+    var res1 = sessionStorage.getItem('activePlaylistName').split(" ");
+    res1 = res1.join('');
+    sessionStorage.setItem('activePlaylistNameHashTag', res1);
+
     this.goToHome();
   }
 

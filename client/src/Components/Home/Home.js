@@ -64,6 +64,7 @@ constructor(props) {
       this.setState({
         tracks: response.tracks.items
       })
+      //console.log(response.tracks.items[0])
     })
   }
 
@@ -86,13 +87,6 @@ constructor(props) {
   handleChange = event => {
     this.setState({playlistName: event.target.value});
     //console.log(this.state.playlistName);
-  }
-
-  setActivePLaylist = playlist => {
-    this.setState({
-      activePlaylistId: playlist.id,
-      activePlaylistName: playlist.name
-    });
   }
 
   AddToPlaylist = track => {
@@ -123,9 +117,14 @@ constructor(props) {
       //https://api.spotify.com/v1/playlists/13CsqCUEgPKYRSBWUI8jXw/tracks?uris=spotify%3Atrack%3A4iV5W9uYEdYUVa79Axb7Rh%2Cspotify%3Atrack%3A1301WleyT98MSxVHPZCA6M
 
       spotifyWebApi.play({'uris': uris});
+      sessionStorage.setItem('chosenSong', track.name );
+
+      var res2 = sessionStorage.getItem('chosenSong').split(" ");
+      res2 = res2.join('');
+      sessionStorage.setItem('chosenSongHashTag', res2);
 
       this.props.history.push({
-        pathname: '/trackAdded'
+        pathname: '/picture'
       });
     }
   }
@@ -143,24 +142,7 @@ constructor(props) {
     });
   }
 
-  CreatePLaylist() {
-    spotifyWebApi.createPlaylist({"name":this.state.playlistName, "public":true, "collaborative":false, "description":null})
-    .then((response) => {
-      this.setState({
-        playlistId: response.id
-      })
-    });
-    spotifyWebApi.getMe()
-    .then((response) => {
-      this.setState({
-        userId: response.id
-      })
-    });
-  }
-
   render() {
-    //console.log(this.state);
-
     return (
       <div className="App">
         <div className=''>
@@ -178,7 +160,6 @@ constructor(props) {
               <div className="logo">
                 <img src="images/logoFullRed.png" />
               </div>
-
               <div className="redBackground">
               <form className="searchSongForm">
                 <h1>What do you wanna hear?</h1>
@@ -190,7 +171,7 @@ constructor(props) {
                     <a id="track" href="#" onClick={() => this.AddToPlaylist(track)}><li>
                       <div className="flex">
                         <div className="imgTrack">
-
+                          <img src={track.album.images[0].url} />
                         </div>
                         <div className="songInfo">
                           <p>{track.name}</p>

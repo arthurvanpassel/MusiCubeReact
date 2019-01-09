@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import Spotify from 'spotify-web-api-js';
 
-import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
-import 'react-html5-camera-photo/build/css/index.css';
-
 var base64Img = require('base64-img');
 var base64ToImage = require('base64-to-image');
 
@@ -31,7 +28,7 @@ constructor(props) {
     tweetText: "",
     tweetTextPic: "",
     pictureUrl: "",
-    pictureAlt: ""
+    pictureAlt: "picture"
   }
 
   if (params.access_token) {
@@ -55,30 +52,13 @@ getHashParams() {
   return hashParams;
 }
 
-
-onTakePhoto (dataUri) {
-    // Do stuff with the dataUri photo...
-    //console.log(dataUri);
+componentDidMount() {
     this.setState({
-      pictureUrl: dataUri
-    })
+      tweetTextPic:  ' #' + sessionStorage.getItem('activePlaylistNameHashTag') + ' #' + sessionStorage.getItem('chosenSongHashTag')
+    });
+}
 
-    var content = {
-      picUrl: dataUri
-    };
-
-    fetch('/savePic',{
-      method: 'POST',
-      body: JSON.stringify(content),
-      json: true,
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      })
-    })
-    .then(res => res.json());
-  }
-
-  getFromTwitter () {
+getFromTwitter () {
     fetch('/get')       // node-cors-server/app.js
     .then(res => res.json())
     .then(data => console.log({data}))
@@ -100,7 +80,8 @@ onTakePhoto (dataUri) {
   }
 
   postPicOnTwitter = () => {
-    console.log(this.state);
+
+    //console.log(this.state);
     var content = {
       text: this.state.tweetTextPic,
       picAlt: this.state.pictureAlt
@@ -115,6 +96,14 @@ onTakePhoto (dataUri) {
     })
     .then(res => res.json())
     .then(data => console.log({data}));
+
+    this.goToEndPage();
+  }
+
+  goToEndPage () {
+    this.props.history.push({
+      pathname: '/thanks'
+    });
   }
 
   handleChange = event => {
@@ -134,34 +123,21 @@ onTakePhoto (dataUri) {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className="App">
-        <h1>Uw liedje is succesvol toegevoegd aan de afspeellijst</h1>
-
-        <div className="flex">
-          <div className="forms">
-            <div className="postText">
-              <h2>Post your sone on twitter</h2>
-              <form onSubmit={this.postOnTwitter}>
-                <textarea rows="6" cols= "30" onChange={this.handleChange}></textarea>
-                <button onClick={() => this.postOnTwitter()}>Tweet!</button>
-              </form>
-            </div>
+        <div className="">
+          <div className="form">
             <div className="postPhoto">
-              <h2>Or post it with a photo</h2>
-              <input type='text' placeholder='Describe your pic' onChange={this.onChange}></input>
+              <h1>Tweet it!</h1>
               <form onSubmit={this.postPicOnTwitter}>
-                <textarea rows="6" cols= "30" onChange={this.handleChangePic} placeholder='Describe your pic'></textarea>
-                <button onClick={() => this.postPicOnTwitter()}>Tweet your pic!</button>
+                <textarea rows="6" cols= "30" onChange={this.handleChangePic} placeholder='Tweet it...'>
+                  { ' #' + sessionStorage.getItem('activePlaylistNameHashTag') + ' #' + sessionStorage.getItem('chosenSongHashTag')}
+                </textarea><br/>
+                <button onClick={() => this.postPicOnTwitter()}>Tweet</button><br/>
+                <button onClick={() => this.goToEndPage()}>No thanks</button>
               </form>
-              <img src={this.state.pictureUrl} />
             </div>
-          </div>
-          <div className="Camera">
-            <Camera
-              onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
-              imageType = {IMAGE_TYPES.JPG}
-            />
           </div>
         </div>
       </div>
