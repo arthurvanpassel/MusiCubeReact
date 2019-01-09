@@ -47,8 +47,9 @@ getHashParams() {
 }
 
 componentDidMount() {
+  var that = this;
   setTimeout(function() {
-    this.props.history.push('/');
+    that.props.history.push('/');
   }, 2000);
 }
 
