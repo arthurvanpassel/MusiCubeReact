@@ -178,7 +178,7 @@ constructor(props) {
                           <p>{track.artists[0].name}</p>
                         </div>
                         <div className="chooseButton">
-                          <button>Choose</button>
+                          <button><strong>CHOOSE</strong></button>
                         </div>
                       </div>
                     </li></a>

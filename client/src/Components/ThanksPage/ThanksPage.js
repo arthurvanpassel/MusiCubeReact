@@ -46,10 +46,10 @@ getHashParams() {
 }
 
 componentDidMount() {
+  var that = this;
   setTimeout(function() {
-    console.log(this);
-    //this.props.history.push('/');
-  }, 500);
+    that.props.history.push('/');
+  }, 2000);
 }
 
   render() {
