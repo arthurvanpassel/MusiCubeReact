@@ -9,7 +9,6 @@ const spotifyWebApi = new Spotify();
 class ThanksPage extends Component {
 constructor(props) {
   super(props);
-
   const params = this.getHashParams();
   this.state = {
     loggedIn: params.access_token? true : false,
@@ -48,8 +47,9 @@ getHashParams() {
 
 componentDidMount() {
   setTimeout(function() {
-    this.props.history.push('/');
-  }, 2000);
+    console.log(this);
+    //this.props.history.push('/');
+  }, 500);
 }
 
   render() {

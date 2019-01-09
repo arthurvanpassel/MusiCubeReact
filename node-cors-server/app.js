@@ -6,10 +6,10 @@ var fs = require("file-system");
 var Twit = require('twit');
 
 var T = new Twit({
-  consumer_key:         'RUvKdeluIFWKbCksmZyPd2ofL',
-  consumer_secret:      '9lJ4X3u7qPQjRmeMQnvBtd2j9b2qeFzNZppF5UuD5CDTBxKxzo',
-  access_token:         '1077614313081372673-fX3RjPjRMg7GSNC5YYO6Mk9xwDPRG8',
-  access_token_secret:  'NBFeLOiImmQXHczcPi9B6uo7FNwFCXPUrIr54u9zInJea'
+  consumer_key:         'ipnn8MXLoHW7QNAI3mYdjG3x1',
+  consumer_secret:      'cFjTA76RicdSnTe29SnW8gFN0JHCGikwLSr8qZjvCBAnpXqrjI',
+  access_token:         '1081630040167772160-GB1lewGNooyeKchvZoODo7hqHTq3qE',
+  access_token_secret:  'ftZJIoPZ6jPpmM6noQD8ikieCP13fWDGlj9z47ZGZoF6w'
 });
 
 var express = require('express'),
@@ -98,7 +98,7 @@ app.post('/postPic', (req,res) => {
             T.post('statuses/update', params, function (err, data, response) {
               // console.log(data)
               console.log('statuses/update');
-              
+
             })
           }
         })
