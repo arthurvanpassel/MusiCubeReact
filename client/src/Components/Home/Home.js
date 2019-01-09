@@ -116,7 +116,7 @@ constructor(props) {
       spotifyWebApi.addTracksToPlaylist(sessionStorage.getItem('activePlaylistId'), uris, {'uris': uris, 'position': 0});
       //https://api.spotify.com/v1/playlists/13CsqCUEgPKYRSBWUI8jXw/tracks?uris=spotify%3Atrack%3A4iV5W9uYEdYUVa79Axb7Rh%2Cspotify%3Atrack%3A1301WleyT98MSxVHPZCA6M
 
-      spotifyWebApi.play({'uris': uris});
+      //spotifyWebApi.play({'uris': uris});
       sessionStorage.setItem('chosenSong', track.name );
 
       var res2 = sessionStorage.getItem('chosenSong');
