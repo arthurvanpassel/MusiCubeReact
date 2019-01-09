@@ -149,7 +149,12 @@ constructor(props) {
         <div className=''>
         {!this.state.loggedIn?
           (
-            <a href='https://vast-anchorage-52732.herokuapp.com/login'><button className="loginButton">Login with Spotify</button></a>
+            <div>
+            <div className="logo">
+            <img src="images/logoFullWhite.png" />
+            </div>
+            <a href='https://vast-anchorage-52732.herokuapp.com/login'><button className="loginButton">Request a song</button></a>
+            </div>
           ) : (
             <div>
               <div className="hide">
