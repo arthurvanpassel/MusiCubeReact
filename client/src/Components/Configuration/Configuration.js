@@ -126,8 +126,8 @@ class Configuration extends Component {
     sessionStorage.setItem('activePlaylistId', playlist.id )
     sessionStorage.setItem('activePlaylistName', playlist.name )
 
-    var res1 = sessionStorage.getItem('activePlaylistName').split(" ");
-    res1 = res1.join('');
+    var res1 = sessionStorage.getItem('activePlaylistName');
+    res1 = res1.replace(/[^a-zA-Z0-9_]/g, "");
     sessionStorage.setItem('activePlaylistNameHashTag', res1);
 
     this.goToHome();

@@ -119,8 +119,8 @@ constructor(props) {
       spotifyWebApi.play({'uris': uris});
       sessionStorage.setItem('chosenSong', track.name );
 
-      var res2 = sessionStorage.getItem('chosenSong').split(" ");
-      res2 = res2.join('');
+      var res2 = sessionStorage.getItem('chosenSong');
+      res2 = res2.replace(/[^a-zA-Z0-9_]/g, "");
       sessionStorage.setItem('chosenSongHashTag', res2);
 
       this.props.history.push({
