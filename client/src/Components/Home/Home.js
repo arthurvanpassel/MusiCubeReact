@@ -107,18 +107,18 @@ constructor(props) {
       var countTracks = spotifyWebApi.getPlaylistTracks(sessionStorage.getItem('activePlaylistId'))
       spotifyWebApi.getPlaylistTracks(sessionStorage.getItem('activePlaylistId'))
       .then((response) => {
-        this.setState({allTracks: response.items}, function () {
-            //console.log(this.state.allTracks);
-            //console.log(this.state.allTracks.length);
+        this.setState({allTracks: response.items});
+        //console.log(this.state.allTracks);
+        //console.log(this.state.allTracks.length);
 
-            for (var i = 0; i < this.state.allTracks.length; i++) {
-              //console.log(this.state.allTracks[i].track.id);
-              if (track.id === this.state.allTracks[i].track.id) {
-                console.log('track is  in playlist')
-                trackInPlaylist = true;
-              }
-            }
-        });
+        for (var i = 0; i < response.items.length; i++) {
+          //console.log(this.state.allTracks[i].track.id);
+          if (track.id === response.items[i].track.id) {
+            console.log('track is  in playlist')
+            trackInPlaylist = true;
+          }
+        }
+        console.log(trackInPlaylist);
         if (trackInPlaylist == false) {
           spotifyWebApi.addTracksToPlaylist(sessionStorage.getItem('activePlaylistId'), uris, {'uris': uris, 'position': response.items.length});
         }
