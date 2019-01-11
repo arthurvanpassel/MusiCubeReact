@@ -55,6 +55,7 @@ getHashParams() {
 onTakePhoto (dataUri) {
     // Do stuff with the dataUri photo...
     //console.log(dataUri);
+
     this.setState({
       pictureUrl: dataUri
     })
@@ -68,7 +69,7 @@ onTakePhoto (dataUri) {
       body: JSON.stringify(content),
       json: true,
       headers: new Headers({
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       })
     })
     .then(res => res.json());

@@ -43,22 +43,8 @@ class Configuration extends Component {
   }
 
   componentDidMount() {
-    //-----------GET-ACTIVE-PLAYLISTNAME----------------------------------------
-    spotifyWebApi.getPlaylist(this.state.activePlaylistId)
-    .then((response) => {
-      this.setState({
-        activePlaylistName: response.name
-      })
-    });
-    //-----------GET-PLAYLISTS--------------------------------------------------
-    spotifyWebApi.getMe()
-    .then((response) => {
-      this.setState({
-        userId: response.id
-      })
-    });
-
-    spotifyWebApi.getUserPlaylists(this.state.userId)
+    //-----------GET-PLAYLISTS--------------------------------------------------;
+    spotifyWebApi.getUserPlaylists(this.props.history.userId)
       .then((response) => {
         this.setState({
           playlists: response.items
@@ -123,8 +109,8 @@ class Configuration extends Component {
   }
 
   setActivePLaylist = playlist => {
-    sessionStorage.setItem('activePlaylistId', playlist.id )
-    sessionStorage.setItem('activePlaylistName', playlist.name )
+    sessionStorage.setItem('activePlaylistId', playlist.id);
+    sessionStorage.setItem('activePlaylistName', playlist.name);
 
     var res1 = sessionStorage.getItem('activePlaylistName');
     res1 = res1.replace(/[^a-zA-Z0-9_]/g, "");
@@ -139,13 +125,15 @@ class Configuration extends Component {
       this.setState({
         playlistId: response.id
       })
+      sessionStorage.setItem('activePlaylistId', response.id);
+      sessionStorage.setItem('activePlaylistName', response.name);
+
+        var res1 = sessionStorage.getItem('activePlaylistName');
+      res1 = res1.replace(/[^a-zA-Z0-9_]/g, "");
+      sessionStorage.setItem('activePlaylistNameHashTag', res1);
     });
-    spotifyWebApi.getMe()
-    .then((response) => {
-      this.setState({
-        userId: response.id
-      })
-    });
+
+    this.goToHome();
   }
 
   render() {
@@ -159,7 +147,7 @@ class Configuration extends Component {
                 <button onClick={() => this.getNowPlaying()}>Check Now Playing...</button>
               </div>
 
-              <button onClick={() => this.goToHome()}>Back to home</button>
+              <button onClick={() => this.goToHome()}>Request a song</button>
               <div className="logo">
                 <img src="images/logoFullRed.png" />
               </div>

@@ -93,10 +93,18 @@ constructor(props) {
   AddToPlaylist = track => {
     //console.log(track);
     if (sessionStorage.getItem('activePlaylistId') == null) {
-      alert("Duid een afspeellijst aan")
+      var userId = this.state.userId;
+      this.props.history.push({
+        pathname: '/configuration',
+        state: {
+          userId: userId
+         }
+      });
     }
     else {
       var trackInPlaylist = false;
+      var uris =  [track.uri];
+      var countTracks = spotifyWebApi.getPlaylistTracks(sessionStorage.getItem('activePlaylistId'))
       spotifyWebApi.getPlaylistTracks(sessionStorage.getItem('activePlaylistId'))
       .then((response) => {
         this.setState({allTracks: response.items}, function () {
@@ -111,13 +119,15 @@ constructor(props) {
               }
             }
         });
+        if (trackInPlaylist == false) {
+          spotifyWebApi.addTracksToPlaylist(sessionStorage.getItem('activePlaylistId'), uris, {'uris': uris, 'position': response.items.length});
+        }
       });
-      //console.log(trackInPlaylist)
-      var uris =  [track.uri];
-      spotifyWebApi.addTracksToPlaylist(sessionStorage.getItem('activePlaylistId'), uris, {'uris': uris, 'position': 0});
-      //https://api.spotify.com/v1/playlists/13CsqCUEgPKYRSBWUI8jXw/tracks?uris=spotify%3Atrack%3A4iV5W9uYEdYUVa79Axb7Rh%2Cspotify%3Atrack%3A1301WleyT98MSxVHPZCA6M
 
+      //console.log(trackInPlaylist)
+      //https://api.spotify.com/v1/playlists/13CsqCUEgPKYRSBWUI8jXw/tracks?uris=spotify%3Atrack%3A4iV5W9uYEdYUVa79Axb7Rh%2Cspotify%3Atrack%3A1301WleyT98MSxVHPZCA6M
       //spotifyWebApi.play({'uris': uris});
+
       sessionStorage.setItem('chosenSong', track.name );
 
       var res2 = sessionStorage.getItem('chosenSong');
@@ -134,11 +144,12 @@ constructor(props) {
     var playList = this.state.activePlaylistId;
     this.showPLaylists();
     var playLists = this.state.playlists;
+    var userId = this.state.userId;
 
     this.props.history.push({
       pathname: '/configuration',
       state: {
-        activePlaylistId: playList
+        userId: userId
        }
     });
   }
@@ -162,13 +173,13 @@ constructor(props) {
                 <div><img src={this.state.nowPlaying.image} style={{width: 300}}></img></div>
                 <button onClick={() => this.getNowPlaying()}>Check Now Playing...</button>
               </div>
-              <button onClick={() => this.goToConfig()}>Configuration</button>
+              <button onClick={() => this.goToConfig()}>Choose a playlist</button>
               <div className="logo">
                 <img src="images/logoFullRed.png" />
               </div>
               <div className="redBackground">
               <form className="searchSongForm">
-                <h1>What do you wanna hear?</h1>
+                <h1>Which song would you like to request?</h1>
                 <input type='text' placeholder='Search...' onChange={this.onChange}></input>
                 <div>
 

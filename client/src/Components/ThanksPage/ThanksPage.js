@@ -57,7 +57,7 @@ componentDidMount() {
       <div className="App">
         <div className="endPage">
           <h1>Thank you!</h1>
-          <p>Enjoy your song</p>
+          <p>your song will be played soon</p>
         </div>
       </div>
     );
