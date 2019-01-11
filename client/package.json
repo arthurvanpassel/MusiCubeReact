@@ -6,8 +6,10 @@
     "base64-img": "^1.0.4",
     "base64-to-image": "^1.0.2",
     "body-parser": "^1.18.2",
+    "browserify-fs": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.16.2",
+    "file-system": "^2.1.0",
     "instagram": "0.0.4",
     "instagram-api": "^1.0.3",
     "link": "^0.1.5",
@@ -16,14 +18,13 @@
     "react-html5-camera-photo": "^1.2.9",
     "react-native": "^0.57.8",
     "react-native-camera": "^1.6.4",
+    "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
     "request": "^2.88.0",
     "spotify-web-api-js": "1.1.1",
     "twit": "^2.2.11",
-    "twitter": "^1.7.1",
-    "file-system": "^2.1.0",
-    "browserify-fs": "^1.0.0"
+    "twitter": "^1.7.1"
   },
   "scripts": {
     "start": "react-scripts start",
