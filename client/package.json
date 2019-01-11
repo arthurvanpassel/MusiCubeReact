@@ -10,6 +10,7 @@
     "cors": "^2.8.5",
     "express": "^4.16.2",
     "file-system": "^2.1.0",
+    "http-proxy-middleware": "^0.19.1",
     "instagram": "0.0.4",
     "instagram-api": "^1.0.3",
     "link": "^0.1.5",
@@ -32,7 +33,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://mighty-ravine-36409.herokuapp.com/",
   "eslintConfig": {
     "extends": "react-app"
   },

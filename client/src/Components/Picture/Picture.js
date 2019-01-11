@@ -64,7 +64,7 @@ onTakePhoto (dataUri) {
       picUrl: dataUri
     };
 
-    fetch('/savePic',{
+    fetch('/api/savePic',{
       method: 'POST',
       body: JSON.stringify(content),
       json: true,
@@ -72,7 +72,7 @@ onTakePhoto (dataUri) {
         'Content-Type': 'application/json'
       })
     })
-    .then(res => res.json());
+    // .then(res => res.json());
 
     this.props.history.push({
       pathname: '/trackAdded'

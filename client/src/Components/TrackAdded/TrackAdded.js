@@ -86,7 +86,7 @@ getFromTwitter () {
       text: this.state.tweetTextPic,
       picAlt: this.state.pictureAlt
     };
-    fetch('/postPic',{
+    fetch('/api/postPic',{
       method: 'POST',
       body: JSON.stringify(content),
       json: true,
